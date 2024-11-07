@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from 'store';
-import { fetchTasks, updateTaskStatus } from 'store/features/tasks/tasks-slice';
-import { TaskStatus } from 'types/tasks';
-import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
-import { Badge } from 'components/ui/badge';
-import { Switch } from 'components/ui/switch';
-import { ScrollArea } from 'components/ui/scroll-area';
+import { AppDispatch, RootState } from '@/store';
+import { fetchTasks, updateTaskStatus } from '@/store/features/tasks/tasks-slice';
+import { TaskStatus } from '@/types/tasks';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Switch } from '@/components/ui/switch';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { format } from 'date-fns';
 import { Loader2 } from 'lucide-react';
 
 export default function TaskList() {
   const dispatch = useDispatch<AppDispatch>();
-  const { items: tasks, status, error } = useSelector((state: RootState) => state.tasks);
+  const { items: tasks, status } = useSelector((state: RootState) => state.tasks);
 
   useEffect(() => {
     if (status === 'idle') {
@@ -30,13 +30,15 @@ export default function TaskList() {
 
   if (status === 'failed') {
     return (
-      <div className="text-center text-destructive">
-        Error: {error}
+      <div className="flex items-center justify-between p-4 bg-red-100 border border-red-400 rounded-lg shadow-md">
+        <h2 className="text-lg font-semibold text-red-600">Failed to fetch tasks.</h2>
       </div>
     );
   }
 
   return (
+    <>
+      <h2 className="text-2xl font-semibold mb-4">Tasks</h2>
     <ScrollArea className="h-[600px] pr-4">
       <div className="space-y-4">
         {tasks.map((task) => (
@@ -71,5 +73,6 @@ export default function TaskList() {
         ))}
       </div>
     </ScrollArea>
+    </>
   );
 }
