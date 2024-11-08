@@ -15,19 +15,17 @@ export default function App() {
               <ClipboardList className="h-10 w-10 text-primary" />
               <h1 className="text-4xl font-bold">Task Manager</h1>
             </div>
-            <p className="text-gray-300">
-              Organize your tasks efficiently
-            </p>
+            <p className="text-gray-300">Organize your tasks efficiently</p>
           </header>
 
-          <div className="flex flex-col items-center justify-center w-full">
-            <div className="mb-6 w-full">
-              <TaskList />
-            </div>
+          <div className="flex flex-col items-center justify-center max-w-[500px]">
             <div className="flex justify-center w-full">
-              <div className="sticky top-8">
-                  <TaskForm />
+              <div className="mb-6 sticky top-8">
+                <TaskForm />
               </div>
+            </div>
+            <div className="w-full">
+              <TaskList />
             </div>
           </div>
         </div>

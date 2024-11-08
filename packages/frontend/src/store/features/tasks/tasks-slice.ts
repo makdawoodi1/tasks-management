@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Task, TaskStatus } from 'types/tasks';
+import { Task, TaskStatus } from '@/types/tasks';
+import { API_BASE_URL } from '@/config';
 
 interface TasksState {
   items: Task[];
@@ -14,14 +15,14 @@ const initialState: TasksState = {
 };
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-  const response = await fetch('http://localhost:4000/tasks');
+  const response = await fetch( `${API_BASE_URL}/tasks`);
   return await response.json();
 });
 
 export const createTask = createAsyncThunk(
   'tasks/createTask',
   async (task: { title: string; description: string }) => {
-    const response = await fetch('http://localhost:4000/tasks', {
+    const response = await fetch(`${API_BASE_URL}/tasks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +36,7 @@ export const createTask = createAsyncThunk(
 export const updateTaskStatus = createAsyncThunk(
   'tasks/updateTaskStatus',
   async ({ id, status }: { id: string; status: TaskStatus }) => {
-    const response = await fetch(`http://localhost:4000/tasks/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
